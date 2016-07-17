@@ -1,0 +1,6 @@
+add-to-repo.sh
+npm-debug.log
+typings/
+node_modules/
+repo/
+npm-debug.log*
