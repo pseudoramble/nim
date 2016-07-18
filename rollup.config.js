@@ -32,6 +32,12 @@ const reactDom = {
   ]
 };
 
+const lodash = {
+  "node_modules/lodash/lodash.js": [
+    "times"
+  ]
+};
+
 export default {
   entry: 'src/index.js',
   dest: './dist/app.js',
@@ -50,7 +56,7 @@ export default {
     }),
     commonjs({
       include: 'node_modules/**',
-      namedExports: Object.assign({}, react, reactDom)
+      namedExports: Object.assign({}, react, reactDom, lodash)
     }),
     babel({
       "exclude": "node_modules/**",
