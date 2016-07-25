@@ -32,6 +32,18 @@ const reactDom = {
   ]
 };
 
+const redux = {
+  "node_modules/redux/index.js": [
+    "createStore"
+  ]
+};
+
+const reactRedux = {
+  "node_modules/react-redux/index.js": [
+    "Provider"
+  ]
+};
+
 const lodash = {
   "node_modules/lodash/lodash.js": [
     "times"
@@ -56,7 +68,7 @@ export default {
     }),
     commonjs({
       include: 'node_modules/**',
-      namedExports: Object.assign({}, react, reactDom, lodash)
+      namedExports: Object.assign({}, react, reactDom, redux, reactRedux, lodash)
     }),
     babel({
       "exclude": "node_modules/**",
