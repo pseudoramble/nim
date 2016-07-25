@@ -39896,8 +39896,10 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var Nim$1 = connect(mapStateToProps)(Nim);
 
-var store = createStore(function () {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { size: 7 } : arguments[0];
+var initialState = { size: 7 };
+
+var gameplay = (function () {
+  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
   var action = arguments[1];
 
   if (action.type === "REMOVE_STICKS") {
@@ -39911,6 +39913,8 @@ var store = createStore(function () {
 
   return state;
 });
+
+var store = createStore(gameplay);
 
 ReactDOM.render(React.createElement(
   Provider,
