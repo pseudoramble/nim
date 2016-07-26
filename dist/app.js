@@ -39771,11 +39771,16 @@ var GameControls = function GameControls(_ref) {
     var onChange = function onChange(event) {
         return amount = event.target.value;
     };
+    var onMount = function onMount(input) {
+        if (input && input.value) {
+            amount = input.value;
+        }
+    };
 
     return React.createElement(
         "div",
         null,
-        React.createElement("input", { onChange: onChange, type: "number", defaultValue: "1", min: "1", max: limit }),
+        React.createElement("input", { style: { "minHeight": "30px" }, ref: onMount, onChange: onChange, type: "number", defaultValue: "1", min: "1", max: limit }),
         React.createElement(
             "button",
             { onClick: function onClick() {
@@ -39790,6 +39795,28 @@ GameControls.defaultProps = {
     takeAway: function takeAway() {},
     limit: 3
 };
+
+var MoveLog = (function (_ref) {
+    var moves = _ref.moves;
+
+    var eachStep = moves.length > 0 ? moves.map(function (action, i) {
+        return React.createElement(
+            "div",
+            { key: i },
+            (action.player === "user" ? "You" : "The computer") + " removed " + action.move + " sticks"
+        );
+    }) : [React.createElement(
+        "div",
+        null,
+        "Begin when you're ready!"
+    )];
+
+    return React.createElement(
+        "div",
+        null,
+        eachStep
+    );
+});
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -39839,6 +39866,16 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 var Nim = function (_Component) {
     inherits(Nim, _Component);
 
@@ -39852,6 +39889,7 @@ var Nim = function (_Component) {
         value: function render() {
             var _props = this.props;
             var dispatch = _props.dispatch;
+            var moveLog = _props.moveLog;
             var size = _props.size;
 
 
@@ -39862,7 +39900,8 @@ var Nim = function (_Component) {
                 React.createElement('br', null),
                 React.createElement(GameControls, { takeAway: function takeAway(amount) {
                         return dispatch({ type: "REMOVE_STICKS", payload: { amount: amount } });
-                    } })
+                    } }),
+                React.createElement(MoveLog, { moves: moveLog })
             ) : React.createElement(
                 'div',
                 null,
@@ -39870,7 +39909,8 @@ var Nim = function (_Component) {
                     'h2',
                     null,
                     "Sorry, you've lost this round. Refresh to play again!"
-                )
+                ),
+                React.createElement(MoveLog, { moves: moveLog })
             );
 
             return React.createElement(
@@ -39890,13 +39930,17 @@ var Nim = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        size: state.size
+        size: state.size,
+        moveLog: state.moves
     };
 };
 
 var Nim$1 = connect(mapStateToProps)(Nim);
 
-var initialState = { size: 7 };
+var initialState = {
+  size: 12,
+  moves: []
+};
 
 var gameplay = (function () {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
@@ -39907,7 +39951,8 @@ var gameplay = (function () {
     var computerMove = leftover - leftover % 4;
 
     return {
-      size: computerMove
+      size: computerMove,
+      moves: [].concat(toConsumableArray(state.moves), [{ player: "user", move: action.payload.amount }, { player: "comp", move: leftover % 4 }])
     };
   }
 

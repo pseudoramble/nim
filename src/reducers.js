@@ -1,4 +1,7 @@
-const initialState = { size: 7 };
+const initialState = {
+  size: 12,
+  moves: []
+};
 
 export default (state = initialState, action)  => {
   if (action.type === "REMOVE_STICKS") {
@@ -6,7 +9,8 @@ export default (state = initialState, action)  => {
     const computerMove = leftover - (leftover % 4);
     
     return {
-      size: computerMove
+      size: computerMove,
+      moves: [...state.moves, { player: "user", move: action.payload.amount }, { player: "comp", move: leftover % 4 }]
     };
   }
   
