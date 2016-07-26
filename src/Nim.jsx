@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import StickPile from './StickPile.jsx';
 import GameControls from './GameControls.jsx';
 import MoveLog from './MoveLog.jsx';
+import Header from './Header.jsx';
 
 class Nim extends Component {
     render() {
         const { dispatch, moveLog, size } = this.props;
 
         const gameBoard = size > 0 ? (
-            <div>
+            <div style={{"margin-top": "15px"}}>
                 <StickPile size={size} />
                 <br />
                 <GameControls takeAway={amount => dispatch({ type: "REMOVE_STICKS", payload: { amount: amount } })} />
@@ -25,7 +26,7 @@ class Nim extends Component {
         
         return (
             <div>
-                <h1>The game of Nim</h1>
+                <Header />
                 {gameBoard}
             </div>
         );

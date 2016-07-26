@@ -6,7 +6,7 @@ export default ({ moves }) => {
         : [<div>{"Begin when you're ready!"}</div>];
     
     return (
-        <div>
+        <div style={{ "margin-top": "15px" }}>
             {eachStep}
         </div>
     )

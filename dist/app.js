@@ -39741,7 +39741,7 @@ var Stick = function Stick() {
     return React.createElement(
         'span',
         null,
-        ' | '
+        ' |*| '
     );
 };
 
@@ -39813,8 +39813,30 @@ var MoveLog = (function (_ref) {
 
     return React.createElement(
         "div",
-        null,
+        { style: { "margin-top": "15px" } },
         eachStep
+    );
+});
+
+var Header = (function (props) {
+    return React.createElement(
+        "div",
+        { style: { "border": "1px dashed" } },
+        React.createElement(
+            "h1",
+            null,
+            "The game of Nim"
+        ),
+        React.createElement(
+            "p",
+            null,
+            "The objective is simple - The player to remove the last stick left in the pile wins!"
+        ),
+        React.createElement(
+            "p",
+            null,
+            "You may only pull 1, 2, or 3 sticks off per move."
+        )
     );
 });
 
@@ -39895,7 +39917,7 @@ var Nim = function (_Component) {
 
             var gameBoard = size > 0 ? React.createElement(
                 'div',
-                null,
+                { style: { "margin-top": "15px" } },
                 React.createElement(StickPile, { size: size }),
                 React.createElement('br', null),
                 React.createElement(GameControls, { takeAway: function takeAway(amount) {
@@ -39916,11 +39938,7 @@ var Nim = function (_Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(
-                    'h1',
-                    null,
-                    'The game of Nim'
-                ),
+                React.createElement(Header, null),
                 gameBoard
             );
         }
